@@ -21,6 +21,11 @@ public class Control : MonoBehaviour
     public string KEY_CCW;
     public string KEY_CW;
 
+    public float CURR_HEALTH;
+    public float MAX_HEALTH;
+
+    public float DAMAGE_TAKEN;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,5 +68,21 @@ public class Control : MonoBehaviour
             }
         }
         rb.AddTorque(transform.forward * torque);
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        float damageDealt = 0;
+        if (collision.gameObject.layer == 9) {
+            //Debug.Log(collision.gameObject.layer);
+            damageDealt = collision.impulse.magnitude;
+        }
+        else {
+            damageDealt = 0.5f * collision.impulse.magnitude;
+        }
+
+        CURR_HEALTH -= damageDealt;
+        DAMAGE_TAKEN += damageDealt;
+        if (CURR_HEALTH <= 0)
+            Destroy(gameObject);
     }
 }

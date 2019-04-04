@@ -10,8 +10,8 @@ public class ProjectileCollision : MonoBehaviour
     private Vector3 prevVel;
     private int reflectCount = 0;
 
-    private const int REFLECT_MAX = 2;
-    private const float LIFETIME_MAX = 2;
+    public int REFLECT_MAX = 2;
+    public float LIFETIME_MAX = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class ProjectileCollision : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         Vector3 reflectedVel = Vector3.Reflect(prevVel, contact.normal);
         rb.velocity = reflectedVel;
-        
+
         reflectCount++;
         if (reflectCount >= REFLECT_MAX) Destroy(gameObject);
     }
